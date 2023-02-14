@@ -1,0 +1,24 @@
+-- 1. название и год выхода альбомов, вышедших в 2018 году
+select name, year from mus_alboms
+where year = '2018';
+
+-- 2. название и продолжительность самого длительного трека
+select name, time_track from mus_tracks
+order by time_track desc
+limit 1
+
+-- 3. название треков, продолжительность которых не менее 3,5 минуты
+select name, time_track from mus_tracks
+where time_track < '03:30';
+
+-- 4. названия сборников, вышедших в период с 2018 по 2020 год включительно
+select name, year from collections
+where year between '2018' and '2020';
+
+-- 5. исполнители, чье имя состоит из 1 слова
+select name from musicians
+where name not like '% %'
+
+-- 6. название треков, которые содержат слово "мой"/"my"
+select name from mus_tracks
+where name like '%мой%'
