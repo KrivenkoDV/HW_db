@@ -26,7 +26,7 @@ create table if not exists mus_tracks (
 	id serial primary key,
 	mus_alboms_id integer not null references mus_alboms(id), -- определяем внешний ключ АЛЬБОМА (один ко многим)
 	name varchar(300) not null,
-    time_track text not null
+    time_track time not null
 );
 
 -- сборник теков
