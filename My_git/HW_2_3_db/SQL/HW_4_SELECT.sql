@@ -16,10 +16,9 @@ join mus_alboms ma on ma.id = mt.mus_alboms_id
 group by ma.name 
 
 -- все исполнители, которые не выпустили альбомы в 2020 году;
-select m.name, ma.name albom from musicians m 
-join links_alboms la on musicians_id = m.id
-join mus_alboms ma on mus_alboms_id = ma.id
-where ma.year <> '2020'
+select distinct m.name from musicians m
+where m.name not in (select distinct m.name from musicians m left join links_alboms la on m.id = musicians_id left join mus_alboms ma on mus_alboms_id = ma.id where ma.year = '2020')
+order by m.name
 
 -- названия сборников, в которых присутствует конкретный исполнитель (выберите сами);
 select c.name from collections c 
@@ -56,7 +55,5 @@ where time_track = (select min(time_track) from mus_tracks)
 select ma.name, count(mus_alboms_id) tracks from mus_alboms ma
 join mus_tracks mt on mt.mus_alboms_id = ma.id
 group by ma.name
-having  count(mus_alboms_id) = (select min(mus_alboms_id) tracks from mus_alboms ma join mus_tracks mt on mt.mus_alboms_id = ma.id) --group by min(mus_alboms_id) 
+having  count(mus_alboms_id) = (select min(mus_alboms_id) tracks from mus_alboms ma join mus_tracks mt on mt.mus_alboms_id = ma.id limit 1)
 order by min(mus_alboms_id)
-limit 1
-
